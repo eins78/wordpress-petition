@@ -34,7 +34,7 @@ Author URI: http://www.freecharity.org.uk/
  *  Global variables and constants
  */
 
-load_plugin_textdomain("fcpetition", 'wp-content/plugins/'.plugin_basename(dirname(__FILE__)));
+load_plugin_textdomain("fcpetition", false, 'wp-content/plugins/'.plugin_basename(dirname(__FILE__)));
 
 // Define options and their default settings
 $options_defaults = array (
@@ -121,7 +121,7 @@ add_action('get_header','fcpetition_export');				//Action for exporting the peti
 if ( isset($_REQUEST['petition-confirm']) )
     add_action('template_redirect', 'fcpetition_confirm');
 
-register_activation_hook(__FILE__, fcpetition_install()); 
+register_activation_hook(__FILE__, 'fcpetition_install'); 
 
 /*
  *  Functions
@@ -145,7 +145,7 @@ function fcpetition_widget($args){
 }
 
 function fcpetition_widget_register() {
-	register_sidebar_widget('Petition Count Widget','fcpetition_widget');
+	wp_register_sidebar_widget('fcpetition_widget', 'Petition Count Widget','fcpetition_widget');
 }
 
 /*
@@ -308,15 +308,21 @@ function fcpetition_first(){
  * The user facing section of the code. Inserts the petition into pages/posts.
  */
 function fcpetition_filter_pages($content) {
+	/*
+	 * 
+	 */
+	global $_POST;
 	global $wpdb;
 	global $signature_table;
 	global $petitions_table;
 
 	#Grab these first. This allows us to only match on the precise post. Otherwise the next regex would match on all posts with petitions.
+if (isset($_POST['petition'])) {
 	$petition = $wpdb->escape($_POST['petition']);
     $petition = wp_kses($petition,array());
+}
 
-	if( $_POST['petition_posted'] == 'Y' && preg_match("/\[\[petition-$petition\]\]/",$content)) {
+	if( isset($_POST['petition_posted']) && $_POST['petition_posted'] == 'Y' && preg_match("/\[\[petition-$petition\]\]/",$content)) {
 		#If the petition has been posted
 
 		#Clean some of the input, make SQL safe and remove HTML from name and comment which may be displayed later.
@@ -523,6 +529,7 @@ function fcpetition_add_pages() {
  * Page for Adding/Deleting petitions.
  */
 function fcpetition_main_page(){
+	global $_POST;
 	global $wpdb;
 	global $petitions_table;
 	global $signature_table;
@@ -637,7 +644,7 @@ function fcpetition_export(){
 	global $wpdb;
 	global $signature_table;
 	#we ought to check for admin access too
-	if ($_GET['petition_export'] && current_user_can('manage_options')){
+	if (isset($_GET['petition_export']) && current_user_can('manage_options')){
 		$po = $wpdb->escape($_GET['petition_export']);
 		header('Content-Type: text/plain');
 		foreach ($wpdb->get_results("SELECT `name`,`email`,`comment`,`time`,`fields` from $signature_table WHERE `confirm`='' and `petition` = '$po' ORDER BY `time` DESC") as $row) {

@@ -519,10 +519,10 @@ function fcpetition_add_pages() {
 	global $petitions_table;
 	global $wpdb;
 
-	add_options_page(__("Petition Add/Delete/Edit","fcpetition"), __("Petition Add/Delete/Edit","fcpetition"), 8,basename(__FILE__)."_main", 'fcpetition_main_page');
+	add_options_page(__("Petition Add/Delete/Edit","fcpetition"), __("Petition Add/Delete/Edit","fcpetition"), 'manage_options' ,basename(__FILE__)."_main", 'fcpetition_main_page');
 	//Remove the options page, it doesn't really maintain the look and feel in 2.7.
 	//add_options_page(__("Petition Settings","fcpetition"), __("Petition Settings","fcpetition"), 8,basename(__FILE__)."_settings", 'fcpetition_settings_page');
-	add_options_page(__("Petition Management","fcpetition"), __("Petition Management","fcpetition"), 8,basename(__FILE__)."_manage", 'fcpetition_manage_page');
+	add_options_page(__("Petition Management","fcpetition"), __("Petition Management","fcpetition"), 'manage_options',basename(__FILE__)."_manage", 'fcpetition_manage_page');
 }
 
 /*

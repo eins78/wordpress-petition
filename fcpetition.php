@@ -34,6 +34,8 @@ Author URI: http://www.freecharity.org.uk/
  *  Global variables and constants
  */
 
+global $wpdb; 
+
 load_plugin_textdomain("fcpetition", false, 'wp-content/plugins/'.plugin_basename(dirname(__FILE__)));
 
 // Define options and their default settings

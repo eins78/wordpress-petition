@@ -432,12 +432,12 @@ function fcpetition_form_top($petition,$action){
 	$text =   wpautop(stripslashes($pa->petition_text));
 	$comments_enabled = $pa->petition_comments;
 
-	$name = __("Name","fcpetition");
-	$email = __("E-mail address","fcpetition");
-	$privacy =  __("Do not display name on website","fcpetition");
-	$button = __("Sign the petition","fcpetition");
+	$name = __("Vorname und Nachname, Stadt (optional) | Full Name, City (optional)","fcpetition");
+	$email = __("E-mail-Adresse","fcpetition");
+	$privacy =  __("Namen nicht auf der Webseite anzeigen.","fcpetition");
+	$button = __("Petition unterschreiben","fcpetition");
 	if($comments_enabled){
-		$comments_form = sprintf(__("Please enter an optional comment","fcpetition")).":<br/><textarea name='petition_comment' cols='50'></textarea><br/>";
+		$comments_form = sprintf(__("Optional einen Kommentar hinzufügen","fcpetition")).":<br/><textarea name='petition_comment' cols='50'></textarea><br/>";
 	}
 	$custom_fields =  fcpetition_livefields($petition);
 	return "

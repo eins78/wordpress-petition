@@ -432,12 +432,12 @@ function fcpetition_form_top($petition,$action){
 	$text =   wpautop(stripslashes($pa->petition_text));
 	$comments_enabled = $pa->petition_comments;
 
-	$name = __("Vorname und Nachname, Stadt (optional) | Full Name, City (optional)","fcpetition");
-	$email = __("E-mail-Adresse","fcpetition");
-	$privacy =  __("Namen nicht auf der Webseite anzeigen.","fcpetition");
+	$name = __("Vorname und Nachname, Stadt (optional)","fcpetition");
+	$email = __("E-mail-Adresse (wird nicht ver&ouml;ffentlicht, muss aber trotzdem g&uuml;ltig sein, weil wir eine E-Mail zur Best&auml;tigung verschicken)","fcpetition");
+	$privacy =  __("(Optional) Meinen Namen nicht auf der Webseite anzeigen","fcpetition");
 	$button = __("Petition unterschreiben","fcpetition");
 	if($comments_enabled){
-		$comments_form = sprintf(__("Optional einen Kommentar hinzufügen","fcpetition")).":<br/><textarea name='petition_comment' cols='50'></textarea><br/>";
+		$comments_form = sprintf(__("(Optional) einen Kommentar hinzuf&uuml;gen","fcpetition")).":<br/><textarea name='petition_comment' cols='50'></textarea><br/>";
 	}
 	$custom_fields =  fcpetition_livefields($petition);
 	return "
@@ -460,7 +460,7 @@ function fcpetition_form_bottom($petition) {
     global $signature_table;
     global $petitions_table;
 	$pa =  fcpetition_fetchattributes($petition);
-    if($pa == 0)  return "<strong>". __("This petition does not exist","fcpetition"). "</strong>";
+    if($pa == 0)  return "<strong>". __("Diese Petition existiert nicht.","fcpetition"). "</strong>";
 	$petition_maximum = $pa->petition_maximum;
 	$comments_enabled = $pa->petition_comments;
 	if($petition_maximum == 0) {
@@ -492,7 +492,7 @@ function fcpetition_form_bottom($petition) {
 				# $sub_form  .= sprintf("<tr><td>%s</td><td>%s</td><td>%s</td></tr>",$the_name,$fields,$comment);
 				$return  .= sprintf("<p><span class='signature'>%s, %s<br/>%s</span></p>",$the_name,$fields,$comment);
 			} else {
-				$return  .= sprintf("<p><span class='signature'>%s, %s</span></p>",$the_name,$fields);
+				$return  .= sprintf("<p class='petition-signature'><span class='petition-name'>%s %s</span></p>",$the_name,$fields);
 			}
 	}
 	# You can edit the following emtpy string if you wish. For instance:

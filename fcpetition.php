@@ -67,7 +67,7 @@ define("OVERRIDE_VERIFICATION",0);
 define("OVERRIDE_CONFIRMATION",0);
 
 // The petition table
-$signature_table = $table_prefix . "petition_signatures";
+$signature_table = $wpdb->prefix."petition_signatures";
 $signature_table_sql = "CREATE TABLE $signature_table (
 						`petition` INT,
                   		`email` VARCHAR(100),
@@ -81,7 +81,7 @@ $signature_table_sql = "CREATE TABLE $signature_table (
 					) %s;
 ";
 
-$petitions_table = $table_prefix . "petitions";
+$petitions_table = $wpdb->prefix."petitions";
 $petitions_table_sql = "CREATE TABLE $petitions_table (
 						`petition` INT AUTO_INCREMENT,
 						`petition_title` VARCHAR(100),
@@ -95,7 +95,7 @@ $petitions_table_sql = "CREATE TABLE $petitions_table (
 					) %s;
 ";
 
-$fields_table = $table_prefix . "petition_fields";
+$fields_table = $wpdb->prefix . "petition_fields";
 $fields_table_sql = "CREATE TABLE $fields_table (
 						`petition` INT,
 						`name`	VARCHAR(100),
@@ -108,7 +108,7 @@ $fields_table_sql = "CREATE TABLE $fields_table (
 ";
 
 
-$old_table = $table_prefix . "petition";
+$old_table = $wpdb->prefix . "petition";
 
 /*
  *  Actions

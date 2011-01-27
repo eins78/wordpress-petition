@@ -35,6 +35,14 @@ Author URI: http://www.freecharity.org.uk/
  */
 
 global $wpdb; 
+global $wpdb;
+global $options_defaults;
+global $signature_table;
+global $signature_table_sql;
+global $petitions_table;
+global $petitions_table_sql;
+global $fields_table;
+global $fields_table_sql;
 
 load_plugin_textdomain("fcpetition", false, 'wp-content/plugins/'.plugin_basename(dirname(__FILE__)));
 

@@ -556,7 +556,7 @@ function fcpetition_main_page(){
 	}
 	
 	//Delete a petition
-	if ($_POST['deletepetition'] != ''){
+	if (isset($_POST['deletepetition']) && ($_POST['deletepetition'] != '') ) {
 		$petition = $wpdb->escape($_POST['deletepetition']);
 		$wpdb->query("DELETE FROM $petitions_table WHERE `petition` = '$petition'");
 		$wpdb->query("DELETE FROM $signature_table WHERE `petition` = '$petition'");
@@ -574,7 +574,7 @@ function fcpetition_main_page(){
 		<?php
 
 	}
-	if($_POST['editpetition']){
+	if (isset($_POST['editpetition'])) {
 		// Ideally we'd refactor this function so that the code was inline.
 		// Comes from when the settings were on a seperate page to this one.
 		fcpetition_settings_page();
@@ -643,6 +643,7 @@ function fcpetition_main_page(){
  * Export the specified petition in CSV format
  */
 function fcpetition_export(){
+	global $_GET;
 	global $wpdb;
 	global $signature_table;
 	#we ought to check for admin access too
@@ -666,6 +667,7 @@ function fcpetition_export(){
  * A page to manage signatures to a particular petition.
  */ 
 function fcpetition_manage_page() {
+	global $_POST;
 	global $wpdb;
 	global $signature_table;
 	global $petitions_table;
@@ -1151,7 +1153,8 @@ function fcpetition_csvfields($package) {
 function fcpetition_settings_page() {
 	/* Handles the petition settings
 	 */
-
+    global $_POST;
+    global $_GET;
     global $wpdb;
     global $options_defaults;
 	global $signature_table;

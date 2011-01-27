@@ -179,18 +179,18 @@ function fcpetition_confirm(){
 	</head>
 	<body>
 	<div class="wrap">
-		<h2><?php printf(__('Confirm Petition Signature - %s', "fcpetition"), get_bloginfo('name')); ?></h2>
+		<h2><?php printf(__('Petition: Unterschrift verifizieren - %s', "fcpetition"), get_bloginfo('name')); ?></h2>
 		<p>
 	<?php
 	if ($wpdb->query("UPDATE $signature_table SET `confirm` = '' WHERE `confirm` = '$confirm'")==1) {
-		print __("Your signature has now been added to the petition. Thank you.","fcpetition");
+		print __("Deine Unterschrift wurde zur Petition hinzugef&uuml;gt. Vielen Dank.","fcpetition");
 	} else {
-		print __("The confirmation code you supplied was invalid. Either it was incorrect or it has already been used.","fcpetition");
+		print __("Der Best&auml;tigungscode ist ung&uuml;ltig. Er ist entweder falsch oder schon benutzt.","fcpetition");
 	}
 	?>
 		</p>
 		<p>
-		<a href="<?php bloginfo('home')?>"><?php printf(__('Take me back to "%s"', "fcpetition"),get_bloginfo('name')); ?></a>
+		<a href="http://m18.uni-weimar.de/bahn/"><?php printf(__('Zur&uuml;ck zur Sonderseite Bahn', "fcpetition"),get_bloginfo('name')); ?></a>
 		</p>
 		</div>
 		</body>
@@ -365,7 +365,7 @@ if (isset($_POST['petition'])) {
 		} elseif ($wpdb->query("INSERT INTO $signature_table (`petition`,`email`,`name`,`confirm`,`comment`,`time`,`fields`,`keep_private`) VALUES ('$petition','$email','$name','$confirm','$comment',NOW(),'$fields','$keep_private')")===FALSE){
 			# This has almost certainly occured due to a duplicate email key
                         $wpdb->show_errors();
-                        return __("Sorry, someone has already attempted to sign the petition using this e-mail address.","fcpetition");
+                        return __("Entschuldigung, mit dieser E-Mail-Adresse wurde diese Petition schon unterschrieben.","fcpetition");
 		} else {
 			$wpdb->show_errors();
                         # Successful signature, send an e-mail asking the user to confirm
@@ -404,7 +404,7 @@ function fcpetition_mail($email,$po){
 
 	$confirm_url = get_bloginfo('home') . "/?petition-confirm=$confirm";
 	$petition_confirmation = str_replace('[[curl]]',$confirm_url,$petition_confirmation);
-	$subject = sprintf(__("Petition: Confirm your signing of the petition '%s'","fcpetition"),$petition_title);
+	$subject = sprintf(__("Petition: Verifiziere deine Unterschrift zur Petition '%s'","fcpetition"),$petition_title);
 	wp_mail($email,"$subject","$petition_confirmation","From: $petition_from");
 }
 
